@@ -2,9 +2,9 @@ from datetime import datetime
 
 class Venda:
     def __init__(self, codigo):
-        self.__codigo = codigo
-        self.__data = datetime.today().strftime('%d-%m-%y')
-        self.__hora = datetime.today().strftime('%H:%M')
+        self.__codigo   = codigo
+        self.__data     = datetime.today().strftime('%d-%m-%y')
+        self.__hora     = datetime.today().strftime('%H:%M')
 
     def __repr__(self):
         codigo = str(self.__codigo)

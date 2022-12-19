@@ -1,4 +1,5 @@
-import produto,venda
+from lib.produto import Produto
+from lib.venda import Venda
 
 class Estoque:
     def __init__(self,nome:str) -> any:
@@ -14,11 +15,11 @@ class Estoque:
         return False
 
     def __repr__(self) -> str:
-        return "Estoque da empresa: " + self.__empresa
+        return str("Estoque da empresa: " + self.__empresa)
 
-    def adicionaProduto(self,produto:str):
+    def adicionaProduto(self,elem):
         '''Adiciona um produto dentro do estoque'''
-        self.__listaDeProdutos.append(produto)
+        self.__listaDeProdutos.append(elem)
         return True
     
     def adicionaVenda(self,venda:str):
@@ -26,12 +27,13 @@ class Estoque:
         self.__listaDeVendas.append(venda)
         return True
     
-    def consultaProduto(self,produto:str) -> str:
+    def consultaProduto(self,elem):
         '''Consulta um produto dentro do estoque'''
         if self.isEmpty(self.__listaDeProdutos):
             return False
-        index = self.__listaDeProdutos.index(produto)
-        return self.__listaDeProdutos[index]
+        for i in range(0, len(self.__listaDeProdutos)):
+            if (self.__listaDeProdutos[i].getCodigo() == elem):
+                return print(self.__listaDeProdutos[i])
     
     def consultaVenda(self,venda:str) -> str:
         '''Consulta um produto dentro do estoque'''
@@ -56,3 +58,4 @@ class Estoque:
         if self.isEmpty(self.__listaDeVendas):
             return False
         self.__listaDeVendas.pop(self.__listaDeVendas.index(venda))
+
