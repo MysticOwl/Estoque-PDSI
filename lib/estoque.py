@@ -33,14 +33,19 @@ class Estoque:
             return False
         for i in range(0, len(self.__listaDeProdutos)):
             if (self.__listaDeProdutos[i].getCodigo() == elem):
-                return print(self.__listaDeProdutos[i])
+                return self.__listaDeProdutos[i]
+            else:
+                return False
     
     def consultaVenda(self,venda:str) -> str:
         '''Consulta um produto dentro do estoque'''
         if self.isEmpty(self.__listaDeVendas):
             return False
-        index = self.__listaDeVendas.index(venda)
-        return self.__listaDeVendas[index]
+        for i in range(0,len(self.__listaDeVendas)):
+            if (self.__listaDeVendas[i].getCodigo()==venda):
+                return self.__listaDeVendas[i]
+            else:
+                return False
     
     def imprimeVenda(self) -> list:
         return self.__listaDeVendas
@@ -51,11 +56,10 @@ class Estoque:
     def removeProduto(self,produto:str) -> bool:
         if self.isEmpty(self.__listaDeProdutos):
             return False
-        self.__listaDeProdutos.pop(self.__listaDeProdutos.index(produto))
+        self.__listaDeProdutos.pop(self.consultaProduto(produto))
         return True
     
     def removeVenda(self,venda:str) -> bool:
         if self.isEmpty(self.__listaDeVendas):
             return False
         self.__listaDeVendas.pop(self.__listaDeVendas.index(venda))
-

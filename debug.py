@@ -5,14 +5,16 @@ algo = Produto()
 algo.setNome("camisa")
 algo.setCodigo('001')
 algo.setUnidade(25)
-algo.setValor(19)
+algo.setValor(19.23)
 
-algo2 = Produto()
-algo2.setNome("camisa2")
-algo2.setCodigo('002')
-algo2.setUnidade(25)
-algo2.setValor(19)
+venda = Venda()
+venda.setCodigo('xyz')
+venda.setValor(19.20)
+venda.setProduto('001')
+
 
 empresa.adicionaProduto(algo)
+empresa.adicionaVenda(venda)
 
-empresa.consultaProduto('001')
+print(empresa.consultaProduto('001'))
+print(empresa.consultaVenda('xyz'))
