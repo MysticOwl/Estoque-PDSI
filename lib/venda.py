@@ -16,7 +16,7 @@ class Venda:
         produto = str(self.__produto)
         data = str(self.__data)
         hora = str(self.__hora)
-        return "Venda:{} Valor:{} do produto {}, realizada em:{} as {}".format(codigo,valor,produto,data,hora)
+        return "Venda:{} Valor:{} Codigo do produto:{}, realizada em:{} as {}".format(codigo,valor,produto,data,hora)
 
     def setCodigo(self,elem:str) -> str:
         '''Insere o valor código da venda'''

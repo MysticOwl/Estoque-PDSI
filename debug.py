@@ -1,20 +1,20 @@
 from lib.estoque import *
 empresa = Estoque("Coisa")
 
-algo = Produto()
-algo.setNome("camisa")
-algo.setCodigo('001')
-algo.setUnidade(25)
-algo.setValor(19.23)
+for i in range (0,5):
+    algo = Produto()
+    algo.setCodigo('{}'.format(i))
+    algo.setNome("Camisa")
+    algo.setUnidade(10)
+    algo.setValor(12.99)
+    empresa.adicionaProduto(algo)
 
-venda = Venda()
-venda.setCodigo('xyz')
-venda.setValor(19.20)
-venda.setProduto('001')
+venda_camisa = Venda()
 
+venda_camisa.setCodigo('zxc')
+venda_camisa.setProduto('0')
+venda_camisa.setValor(19.99)
 
-empresa.adicionaProduto(algo)
-empresa.adicionaVenda(venda)
+empresa.adicionaVenda(venda_camisa)
 
-print(empresa.consultaProduto('001'))
-print(empresa.consultaVenda('xyz'))
+empresa.imprimeVenda()

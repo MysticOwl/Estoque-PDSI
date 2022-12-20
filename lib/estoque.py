@@ -21,12 +21,27 @@ class Estoque:
         '''Adiciona um produto dentro do estoque'''
         self.__listaDeProdutos.append(elem)
         return True
-    
-    def adicionaVenda(self,venda:str):
-        '''Adiciona uma venda dentro do estoque'''
-        self.__listaDeVendas.append(venda)
+
+    def _verificaVenda(self,elem) -> bool:
+        '''Função que indentifica se é possível \n
+            Realizar a venda o produto'''
+        venda = self.consultaProduto(elem.getProduto())
+
+        if not(venda):
+            return False
+        
+        if venda.getUnidade() <= 0:
+            return False
+        
         return True
     
+    def adicionaVenda(self,venda):
+        '''Adiciona uma venda dentro do estoque'''
+        produto = self._verificaVenda(venda)
+        if not(produto):
+            return False
+        return self.__listaDeVendas.append(venda)        
+
     def consultaProduto(self,elem):
         '''Consulta um produto dentro do estoque'''
         if self.isEmpty(self.__listaDeProdutos):
@@ -48,10 +63,14 @@ class Estoque:
                 return False
     
     def imprimeVenda(self) -> list:
-        return self.__listaDeVendas
+        '''Função responsável por retornar a lista de vendas'''
+        for i in self.__listaDeVendas:
+            print(i)
     
     def imprimeProduto(self) -> list:
-        return self.__listaDeProdutos
+        '''Imprime a lista de produtos no estoque'''
+        for i in self.__listaDeProdutos:
+            print(i)
     
     def removeProduto(self,produto:str) -> bool:
         if self.isEmpty(self.__listaDeProdutos):
