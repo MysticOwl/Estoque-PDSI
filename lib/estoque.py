@@ -1,3 +1,4 @@
+#Biblioteca local
 from lib.produto import Produto
 from lib.venda import Venda
 
@@ -17,9 +18,33 @@ class Estoque:
     def __repr__(self) -> str:
         return str("Estoque da empresa: " + self.__empresa)
 
-    def adicionaProduto(self,elem):
+    def adicionaProduto(self,
+                        elem=Produto()):
         '''Adiciona um produto dentro do estoque'''
-        self.__listaDeProdutos.append(elem)
+
+        #Lista de atributos da classe Produto
+        lista_atributos = [
+            'nome','codigo',
+            'unidade','valor'
+        ]
+
+        #Loop para setar os atributos do objeto elem
+        for i in lista_atributos:
+            if i == 'unidade':
+                setattr(elem,
+                        i,
+                        int(input('{} do produto: '.format(i))))
+            elif i == 'valor':
+                setattr(elem,
+                        i,
+                        float(input('{} do produto: '.format(i))))
+            else:
+                setattr(elem,
+                        i,
+                        str(input('{} do produto: '.format(i))))
+
+        #Adiciona o objeto na lista de produtos dentro do estoque
+        self.__listaDeProdutos.append(elem)                
         return True
 
     def _verificaVenda(self,elem) -> bool:
