@@ -17,4 +17,4 @@ class Produto:
         codigo  = str(self.codigo)
         unidade = str(self.unidade)
         valor   = str(self.valor)
-        return str("Produto:{}, Codigo:{}, Valor:{}, Quantidade:{}".format(nome,codigo,valor,unidade))
+        return str("|Produto:{} | Codigo:{} | Valor:{} | Quantidade:{}|".format(nome,codigo,valor,unidade))

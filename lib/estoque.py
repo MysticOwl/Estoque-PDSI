@@ -5,31 +5,31 @@ from lib.venda import Venda
 class Estoque:
     def __init__(self,nome:str) -> any:
         '''Criação do estoque  com o parâmetro nome como obrigatório'''
-        self.__empresa = nome
-        self.__listaDeProdutos = []
-        self.__listaDeVendas = []
+        self.empresa = nome
+        #Lista de atributos da classe Produto
+        self.lista_atributos = [
+            'nome','codigo',
+            'unidade','valor'
+        ]
+        self.lista_de_produtos = []
+        self.lista_de_vendas = []
 
-    def isEmpty(self,elem:str):
+    def isEmpty(self,elem) -> bool:
         '''Verifica se a lista (elem) está vazia'''
         if len(elem) <= 0:
             return True
         return False
 
     def __repr__(self) -> str:
-        return str("Estoque da empresa: " + self.__empresa)
+        return str("Estoque da empresa: " + self.empresa)
 
-    def adicionaProduto(self,
-                        elem=Produto()):
+    def adicionaProduto(self):
         '''Adiciona um produto dentro do estoque'''
 
-        #Lista de atributos da classe Produto
-        lista_atributos = [
-            'nome','codigo',
-            'unidade','valor'
-        ]
-
+        #Cria o objeto Produto e armazena na variável elem
+        elem=Produto()
         #Loop para setar os atributos do objeto elem
-        for i in lista_atributos:
+        for i in self.lista_atributos:
             if i == 'unidade':
                 setattr(elem,
                         i,
@@ -41,10 +41,10 @@ class Estoque:
             else:
                 setattr(elem,
                         i,
-                        str(input('{} do produto: '.format(i))))
+                        str(input('{} do produto: '.format(i))).lower())
 
         #Adiciona o objeto na lista de produtos dentro do estoque
-        self.__listaDeProdutos.append(elem)                
+        self.lista_de_produtos.append(elem)              
         return True
 
     def _verificaVenda(self,elem) -> bool:
@@ -65,45 +65,53 @@ class Estoque:
         produto = self._verificaVenda(venda)
         if not(produto):
             return False
-        return self.__listaDeVendas.append(venda)        
+        return self.lista_de_vendas.append(venda)        
 
-    def consultaProduto(self,elem):
+    def consultaProduto(self,busca:str,elem):        
         '''Consulta um produto dentro do estoque'''
-        if self.isEmpty(self.__listaDeProdutos):
+
+        if self.isEmpty(self.lista_de_produtos) or not(busca in self.lista_atributos):
             return False
-        for i in range(0, len(self.__listaDeProdutos)):
-            if (self.__listaDeProdutos[i].getCodigo() == elem):
-                return self.__listaDeProdutos[i]
+        
+        #Laço de repetição retornar todos os campos que corespondem ao elemento requisitado
+        for i in self.lista_de_produtos:
+            if getattr(i,busca.lower()) == elem:
+                print(i)
             else:
                 return False
     
     def consultaVenda(self,venda:str) -> str:
         '''Consulta um produto dentro do estoque'''
-        if self.isEmpty(self.__listaDeVendas):
+        if self.isEmpty(self.lista_de_vendas):
             return False
-        for i in range(0,len(self.__listaDeVendas)):
-            if (self.__listaDeVendas[i].getCodigo()==venda):
-                return self.__listaDeVendas[i]
+        for i in range(0,len(self.lista_de_vendas)):
+            if (self.lista_de_vendas[i].codigo()==venda):
+                return self.lista_de_vendas[i]
             else:
                 return False
     
     def imprimeVenda(self) -> list:
         '''Função responsável por retornar a lista de vendas'''
-        for i in self.__listaDeVendas:
+        for i in self.lista_de_vendas:
             print(i)
     
     def imprimeProduto(self) -> list:
         '''Imprime a lista de produtos no estoque'''
-        for i in self.__listaDeProdutos:
+        for i in self.lista_de_produtos:
             print(i)
     
     def removeProduto(self,produto:str) -> bool:
-        if self.isEmpty(self.__listaDeProdutos):
+        if self.isEmpty(self.lista_de_produtos):
             return False
-        self.__listaDeProdutos.pop(self.consultaProduto(produto))
+        self.lista_de_produtos.pop(self.consultaProduto(produto))
         return True
     
     def removeVenda(self,venda:str) -> bool:
-        if self.isEmpty(self.__listaDeVendas):
+        if self.isEmpty(self.lista_de_vendas):
             return False
-        self.__listaDeVendas.pop(self.__listaDeVendas.index(venda))
+        self.lista_de_vendas.pop(self.lista_de_vendas.index(venda))
+
+    def debug(self,e):
+        if e in self.lista_atributos:
+            return True
+        return False
