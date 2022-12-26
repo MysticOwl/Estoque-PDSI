@@ -1,6 +1,7 @@
 #Biblioteca local
 from lib.produto import Produto
 from lib.venda import Venda
+from lib.menu import *
 
 class Estoque:
     def __init__(self,nome:str) -> any:
@@ -23,11 +24,8 @@ class Estoque:
     def __repr__(self) -> str:
         return str("Estoque da empresa: " + self.empresa)
 
-    def adicionaProduto(self):
-        '''Adiciona um produto dentro do estoque'''
+    def _setAtributo(self,elem) -> object:
 
-        #Cria o objeto Produto e armazena na variável elem
-        elem=Produto()
         #Loop para setar os atributos do objeto elem
         for i in self.lista_atributos:
             if i == 'unidade':
@@ -42,14 +40,25 @@ class Estoque:
                 setattr(elem,
                         i,
                         str(input('{} do produto: '.format(i))).lower())
+    
+    def adicionaProduto(self):
+        '''Adiciona um produto dentro do estoque'''
+
+        #Cria o objeto Produto e armazena na variável elem
+        elem=Produto()
+
+        #Função para setar os atributos do objeto
+        self._setAtributo(elem)
 
         #Adiciona o objeto na lista de produtos dentro do estoque
-        self.lista_de_produtos.append(elem)              
+        self.lista_de_produtos.append(elem)  
+
         return True
 
     def _verificaVenda(self,elem) -> bool:
         '''Função que indentifica se é possível \n
             Realizar a venda o produto'''
+
         venda = self.consultaProduto(elem.getProduto())
 
         if not(venda):
@@ -61,24 +70,57 @@ class Estoque:
         return True
     
     def adicionaVenda(self,venda):
+
         '''Adiciona uma venda dentro do estoque'''
+
         produto = self._verificaVenda(venda)
+
         if not(produto):
+
             return False
+
         return self.lista_de_vendas.append(venda)        
 
-    def consultaProduto(self,busca:str,elem):        
+    def consultaProduto(self,busca:str.lower,elem):     
+
         '''Consulta um produto dentro do estoque'''
 
-        if self.isEmpty(self.lista_de_produtos) or not(busca in self.lista_atributos):
+        if (self.isEmpty(self.lista_de_produtos) or
+            not(busca in self.lista_atributos)):
+
             return False
         
+        #Lista que retorna os resultados da pesquisa
+        resultado_consulta = []
+
         #Laço de repetição retornar todos os campos que corespondem ao elemento requisitado
         for i in self.lista_de_produtos:
-            if getattr(i,busca.lower()) == elem:
-                print(i)
+
+            if getattr(i,busca) == elem:
+                resultado_consulta.append(i)
+                
             else:
                 return False
+
+        return resultado_consulta
+    
+    def alteraProduto(self,elem) -> bool:
+        '''Função que altera o produto consultando o código'''
+        if not(self.consultaProduto('codigo',elem)):
+            return False
+        
+        elem = self.consultaProduto('codigo',elem)
+        print("Produto selecioando:")
+        print(elem)
+
+        atributo = int(menuAlteraProduto())-1
+
+        setattr(elem,
+                self.lista_atributos[atributo],
+                )
+
+        return
+        
     
     def consultaVenda(self,venda:str) -> str:
         '''Consulta um produto dentro do estoque'''
